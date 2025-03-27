@@ -21,10 +21,6 @@ def qsort(a, pivot_fn):
     return qsort(left, pivot_fn) + middle + qsort(right, pivot_fn)
 
 def time_search(sort_fn, mylist):
-    """
-    Return the number of milliseconds to run this
-    sort function on this list.
-    """
     start = time.time()
     sort_fn(mylist)
     return (time.time() - start) * 1000
@@ -63,16 +59,10 @@ def compare_sort(sizes=[50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 30000
     return results_random, results_sorted
 
 def print_results(results, title):
-    """
-    Print formatted results using tabulate.
-    """
     print(f"\n{title}")
     print(tabulate.tabulate(results, headers=['n', 'ssort', 'qsort-fixed', 'qsort-random', 'timsort'], floatfmt=".3f", tablefmt="github"))
 
 def test_print():
-    """
-    Run the sorting comparisons and print results.
-    """
     results_random, results_sorted = compare_sort()
     print_results(results_random, "Comparison on Random Permutations")
     print_results(results_sorted, "Comparison on Sorted Lists")
