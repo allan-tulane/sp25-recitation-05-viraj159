@@ -2,7 +2,7 @@ import random, time
 import tabulate
 
 def ssort(L):
-    ### selection sort
+    ### Iterative selection sort
     for i in range(len(L)):
         min_index = i
         for j in range(i + 1, len(L)):
@@ -21,7 +21,17 @@ def qsort(a, pivot_fn):
     right = [x for x in a if x > pivot_value]
     return qsort(left, pivot_fn) + middle + qsort(right, pivot_fn)
 
+# Fix for fixed pivot:
+def qsort_fixed_pivot(a):
+    if len(a) < 2:
+        return a
+    return qsort(a, lambda lst: len(lst) // 2)
+
 def time_search(sort_fn, mylist):
+    """
+    Return the number of milliseconds to run this
+    sort function on this list.
+    """
     start = time.time()
     sort_fn(mylist)
     return (time.time() - start) * 1000
@@ -30,7 +40,6 @@ def compare_sort(sizes=[50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 30000
     """
     Compare the running time of different sorting algorithms.
     """
-    qsort_fixed_pivot = lambda lst: qsort(lst, lambda lst: 0)
     qsort_random_pivot = lambda lst: qsort(lst, lambda lst: random.randrange(len(lst)))
     tim_sort = lambda lst: sorted(lst)
     
@@ -60,10 +69,16 @@ def compare_sort(sizes=[50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 30000
     return results_random, results_sorted
 
 def print_results(results, title):
+    """
+    Print formatted results using tabulate.
+    """
     print(f"\n{title}")
     print(tabulate.tabulate(results, headers=['n', 'ssort', 'qsort-fixed', 'qsort-random', 'timsort'], floatfmt=".3f", tablefmt="github"))
 
 def test_print():
+    """
+    Run the sorting comparisons and print results.
+    """
     results_random, results_sorted = compare_sort()
     print_results(results_random, "Comparison on Random Permutations")
     print_results(results_sorted, "Comparison on Sorted Lists")
