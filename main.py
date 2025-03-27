@@ -3,12 +3,13 @@ import tabulate
 
 def ssort(L):
     ### selection sort
-    if len(L) <= 1:
-        return L
-    else:
-        m = L.index(min(L))
-        L[0], L[m] = L[m], L[0]
-        return [L[0]] + ssort(L[1:])
+    for i in range(len(L)):
+        min_index = i
+        for j in range(i + 1, len(L)):
+            if L[j] < L[min_index]:
+                min_index = j
+        L[i], L[min_index] = L[min_index], L[i]
+    return L
 
 def qsort(a, pivot_fn):
     if len(a) < 2:
