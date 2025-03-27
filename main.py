@@ -62,6 +62,8 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
     # Define two variants of quicksort using currying:
     qsort_fixed_pivot = lambda lst: qsort(lst, lambda lst: 0)
     qsort_random_pivot = lambda lst: qsort(lst, lambda lst: random.randrange(len(lst)))
+    tim_sort = lambda lst: sorted(lst)
+
     
     result = []
     for size in sizes:
@@ -73,6 +75,7 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
             len(mylist),
             time_search(qsort_fixed_pivot, mylist.copy()),
             time_search(qsort_random_pivot, mylist.copy()),
+            time_search(tim_sort, mylist.copy())
         ])
     return result
     ###
@@ -80,7 +83,7 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
 def print_results(results):
     """ change as needed for comparisons """
     print(tabulate.tabulate(results,
-                            headers=['n', 'qsort-fixed-pivot', 'qsort-random-pivot'],
+                            headers=['n', 'qsort-fixed-pivot', 'qsort-random-pivot', 'timsort'],
                             floatfmt=".3f",
                             tablefmt="github"))
 
