@@ -10,7 +10,7 @@ def ssort(L):
         print('selecting minimum %s' % L[m])       
         L[0], L[m] = L[m], L[0]
         print('recursively sorting L=%s\n' % L[1:])
-        return [L[0]] + selection_sort(L[1:])
+        return [L[0]] + ssort(L[1:])
         
 def qsort(a, pivot_fn):
     ## TO DO
