@@ -7,14 +7,23 @@ def ssort(L):
         return(L)
     else:
         m = L.index(min(L))
-        print('selecting minimum %s' % L[m])       
+        # print('selecting minimum %s' % L[m])       
         L[0], L[m] = L[m], L[0]
-        print('recursively sorting L=%s\n' % L[1:])
+        # print('recursively sorting L=%s\n' % L[1:])
         return [L[0]] + ssort(L[1:])
         
 def qsort(a, pivot_fn):
-    ## TO DO
-    pass
+    if len(a) < 2:
+        return a
+    # Select the pivot using the provided function:
+    pivot_index = pivot_fn(a)
+    pivot_value = a[pivot_index]
+    # Partition the list into elements less than, equal to, and greater than the pivot.
+    left = [x for x in a if x < pivot_value]
+    middle = [x for x in a if x == pivot_value]
+    right = [x for x in a if x > pivot_value]
+    return qsort(left, pivot_fn) + middle + qsort(right, pivot_fn)
+
     
 def time_search(sort_fn, mylist):
     """
@@ -50,9 +59,10 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
       for each method to run on each value of n
     """
     ### TODO - sorting algorithms for comparison
-    qsort_fixed_pivot = # 
-    qsort_random_pivot = #
-    tim_sort = #
+    # Define two variants of quicksort using currying:
+    qsort_fixed_pivot = lambda lst: qsort(lst, lambda lst: 0)
+    qsort_random_pivot = lambda lst: qsort(lst, lambda lst: random.randrange(len(lst)))
+    
     result = []
     for size in sizes:
         # create list in ascending order
@@ -61,8 +71,8 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
         #random.shuffle(mylist)
         result.append([
             len(mylist),
-            time_search(qsort_fixed_pivot, mylist),
-            time_search(qsort_random_pivot, mylist),
+            time_search(qsort_fixed_pivot, mylist.copy()),
+            time_search(qsort_random_pivot, mylist.copy()),
         ])
     return result
     ###
